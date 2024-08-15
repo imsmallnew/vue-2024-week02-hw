@@ -91,9 +91,9 @@
                           <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
                         </svg> 未完成</small></td>
                         <td width="30%" style="text-align: right;">
-                            <button type="button" class="col" @click="editItem(item)" :disabled="editItems.length > 0 || deleteId > 0" v-bind:style="{ display: deleteId === item.id ? 'none' : 'inline-block' }">編輯待辦事項</button>
-                            <button type="button" class="col" @click="showDoubleConfirm(item)" :disabled="editItems.length > 0 || deleteId > 0" v-bind:style="{ display: deleteId === item.id ? 'none' : 'inline-block' }">刪除</button>
-                            <button type="button" class="col" @click="toggleTodo(item)" :disabled="editItems.length > 0 || deleteId > 0" v-bind:style="{ display: deleteId === item.id ? 'none' : 'inline-block' }">改狀態</button>
+                            <button type="button" class="col" @click="editItem(item)" :disabled="editItems.length > 0 || deleteId !==''" v-bind:style="{ display: deleteId === item.id ? 'none' : 'inline-block' }">編輯待辦事項</button>
+                            <button type="button" class="col" @click="showDoubleConfirm(item)" :disabled="editItems.length > 0 || deleteId !==''" v-bind:style="{ display: deleteId === item.id ? 'none' : 'inline-block' }">刪除</button>
+                            <button type="button" class="col" @click="toggleTodo(item)" :disabled="editItems.length > 0 || deleteId !==''" v-bind:style="{ display: deleteId === item.id ? 'none' : 'inline-block' }">改狀態</button>
                             <button type="button" class="col" @click="cancelDelete(item)" :disabled="editItems.length > 0" v-if="deleteId === item.id">取消刪除</button>
                             <button type="button" class="col" @click="deleteItem(item)" :disabled="editItems.length > 0" v-if="deleteId === item.id">確認刪除</button>
                         </td>
@@ -101,7 +101,7 @@
                     </tbody>
                     </table>
                     <hr />
-                    <button type="button" class="col" @click="createItem()" :disabled="editItems.length > 0 || deleteId > 0">新增待辦事項</button>
+                    <button type="button" class="col" @click="createItem()" :disabled="editItems.length > 0 || deleteId !==''">新增待辦事項</button>
             </div>
         </div>
     </div>
@@ -347,7 +347,6 @@ const createTodo = async() => {
         toastPopup(message);   
     } catch(err){
         // 新增失敗
-        console.log("err:0",err)
         let message = `新增待辦事項失敗, ${err.response.data.message}`;
         toastPopup(message);
     };
