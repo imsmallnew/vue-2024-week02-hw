@@ -11,7 +11,7 @@ export default defineConfig({
     vueDevTools(),
   ],
   resolve: {
-    base: '/vue-2024-week02-hw/',
+    base: './vue-2024-week02-hw/',
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
