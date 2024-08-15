@@ -303,7 +303,7 @@ const getTodoList = async() => {
 const createTodo = async() => {
     try{
         let detail;
-        if(cloneStatus){
+        if(cloneStatus.value){
           const index = todoLists.value.findIndex(i => i.editing === true);
           detail = todoLists.value[index].content
         }else{
