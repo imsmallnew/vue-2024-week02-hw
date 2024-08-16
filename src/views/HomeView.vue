@@ -207,11 +207,9 @@ const signIn = async() => {
     };
 }
 
-
-
-onMounted(async() => {
-    // 讀出 cookie
-    token.value = document.cookie.replace(
+const checkOut = async () =>{
+  // 讀出 cookie
+  token.value = document.cookie.replace(
         /(?:(?:^|.*;\s*)myToken\s*=\s*([^;]*).*$)|^.*$/,
         "$1",
     );
@@ -225,16 +223,29 @@ onMounted(async() => {
         
         checkoutResponse.value = response.data;
         user.value = response.data;
-        loginStatus = response.data?.status
-        if(loginStatus){
+        loginStatus.value = response.data?.status
+        if(loginStatus.value){
             getTodoList()
         }
        
     } catch(err){
         checkoutResponse.value = err.response.data.message;
-        loginStatus = err.response.data?.status
+        loginStatus.value = err.response.data?.status
     };
+}
+
+onMounted(() => {
+    token.value = document.cookie.replace(
+        /(?:(?:^|.*;\s*)myToken\s*=\s*([^;]*).*$)|^.*$/,
+        "$1",
+    );
+
+    if(token.value != "") {
+      loginStatus.value = true
+      checkOut()
+    }
 })
+
 
 
 const signOut= async() => {
@@ -249,6 +260,7 @@ const signOut= async() => {
         );
         
         signOutResponse.value = response.data.message;
+        document.cookie = `myToken=; max-age=0; path=/;`
         // 重整網頁
         location.reload();
         tablValue.value = 2 
